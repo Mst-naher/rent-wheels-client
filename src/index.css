@@ -4,6 +4,10 @@
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  --color-primary: blue;
+  --color-primary:  oklch(65% 0.25 140);
   --color-secondary: teal;
+}
+
+.my-btn{
+  @apply btn w-full bg-gradient-to-r from-indigo-600 via-purple-400 to-pink-800 text-white font-semibold border-none hover:scale-105 transition-transform duration-200 mb-2;
 }

@@ -11,6 +11,8 @@ import AddCar from './Components/AddCar/AddCar.jsx';
 import MyListing from './Components/MyListing/MyListing.jsx';
 import MyBooking from './Components/MyBooking/MyBooking.jsx';
 import BrowsCars from './Components/BrowsCars/BrowsCars.jsx';
+import Login from './Pages/Login.jsx';
+import Signup from './Pages/Signup.jsx';
 
 
 
@@ -38,6 +40,14 @@ const router = createBrowserRouter([
           {
             path:'browsCars',
             Component: BrowsCars
+          },
+          {
+            path:'login',
+           element: <Login/>
+          },
+          {
+            path:'signup',
+            element: <Signup/>
           },
          
     ] 
