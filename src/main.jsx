@@ -13,6 +13,7 @@ import MyBooking from './Components/MyBooking/MyBooking.jsx';
 import BrowsCars from './Components/BrowsCars/BrowsCars.jsx';
 import Login from './Pages/Login.jsx';
 import Signup from './Pages/Signup.jsx';
+import { ToastContainer } from 'react-toastify';
 
 
 
@@ -57,5 +58,6 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <RouterProvider router={router} />,
+    <ToastContainer/>
   </StrictMode>,
 );

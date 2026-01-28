@@ -1,8 +1,29 @@
 import React from "react";
 import MyContainer from "../Components/MyContainer/MyContainer";
 import { Link } from "react-router";
+import { createUserWithEmailAndPassword } from "firebase/auth/web-extension";
+import { auth } from "../firebase/firebase.init";
+import { toast } from "react-toastify";
 
 const Signup = () => {
+  const handleSignup = (e) => {
+    e.preventDefault();
+    const email = e.target.email?.value;
+    const password = e.target.password?.value;
+
+    console.log("signup function entered", { email, password });
+
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((res) => {
+      console.log(res);
+      toast.success("Signup successful")
+    })
+    .catch(error=>{
+      console.log(error)
+      toast.error(error.message)
+    })
+  };
+
   return (
     <MyContainer className="  ">
       <h2 className="text-3xl font-bold text-center m-10">
@@ -22,21 +43,25 @@ const Signup = () => {
           </div>
           <div className="flex-1 card bg-base-100 w-full mx-auto max-w-sm shrink-0 shadow-2xl">
             <div className="card-body">
-              <fieldset className="fieldset">
+              <form onSubmit={handleSignup} className="">
+                {/* email field */}
                 <label className="label">Email</label>
                 <input
                   type="email"
-                  className="input w-full"
+                  name="email"
                   placeholder="Email"
+                  className="input w-full mb-2"
                 />
+                {/* password field */}
                 <label className="label">Password</label>
                 <input
-                  type="password"
-                  className="input w-full"
-                  placeholder="Password"
+                  name="password"
+                  type={"text"}
+                  placeholder=".........."
+                  className="input w-full mb-2"
                 />
                 <div>
-                  <a className="link link-hover">Forgot password?</a>
+                  {/* <a className="link link-hover">Forgot password?</a> */}
                 </div>
                 <button className="my-btn mt-4">Sign Up</button>
                 <p className="text-center font-bold text-gray-500">OR </p>
@@ -81,7 +106,7 @@ const Signup = () => {
                     Log in
                   </Link>
                 </div>
-              </fieldset>
+              </form>
             </div>
           </div>
         </div>
