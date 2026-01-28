@@ -1,27 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import MyContainer from "../Components/MyContainer/MyContainer";
 import { Link } from "react-router";
 import { createUserWithEmailAndPassword } from "firebase/auth/web-extension";
 import { auth } from "../firebase/firebase.init";
 import { toast } from "react-toastify";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Signup = () => {
+  const [show, setShow] = useState(false);
+
   const handleSignup = (e) => {
     e.preventDefault();
     const email = e.target.email?.value;
     const password = e.target.password?.value;
 
-    console.log("signup function entered", { email, password });
+    // console.log("signup function entered", { email, password });
+
+    // const regex = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
+    // if (!regex.test(password)) {
+    //   toast.error(
+    //     "Password must be at least 6 characters long and contain at least one uppercase and one lowercase letter",
+    //   );
+    //   return;
+    // }
 
     createUserWithEmailAndPassword(auth, email, password)
-    .then((res) => {
-      console.log(res);
-      toast.success("Signup successful")
-    })
-    .catch(error=>{
-      console.log(error)
-      toast.error(error.message)
-    })
+      .then((res) => {
+        console.log(res);
+        toast.success("Signup successful");
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log(error.code);
+        toast.error(error.message);
+        
+        if (error.code == "auth/email-already-in-use") {
+          toast.error("User is already exist in database.");
+        }
+      });
+
   };
 
   return (
@@ -32,7 +49,6 @@ const Signup = () => {
       <div>
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
-            <h1 className="text-xl font-bold">Please Register </h1>
             <div className="flex-1">
               <img
                 className="w-[600px] mb-5"
@@ -43,6 +59,9 @@ const Signup = () => {
           </div>
           <div className="flex-1 card bg-base-100 w-full mx-auto max-w-sm shrink-0 shadow-2xl">
             <div className="card-body">
+              <h1 className="text-xl font-semibold">
+                Please Register your account{" "}
+              </h1>
               <form onSubmit={handleSignup} className="">
                 {/* email field */}
                 <label className="label">Email</label>
@@ -52,14 +71,23 @@ const Signup = () => {
                   placeholder="Email"
                   className="input w-full mb-2"
                 />
-                {/* password field */}
-                <label className="label">Password</label>
-                <input
-                  name="password"
-                  type={"text"}
-                  placeholder=".........."
-                  className="input w-full mb-2"
-                />
+                <div className="relative">
+                  {/* password field */}
+                  <label className="label">Password</label>
+                  <input
+                    name="password"
+                    type={show ? "text" : "password"}
+                    placeholder=".........."
+                    className="input w-full mb-2"
+                  />
+                  <span
+                    onClick={() => setShow(!show)}
+                    className="absolute right-[15px] top-[36px] cursor-pointer z-50"
+                  >
+                    {show ? <FaEye /> : <FaEyeSlash />}
+                  </span>{" "}
+                </div>
+
                 <div>
                   {/* <a className="link link-hover">Forgot password?</a> */}
                 </div>
