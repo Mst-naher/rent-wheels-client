@@ -1,16 +1,35 @@
-import React, { useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import MyContainer from "../Components/MyContainer/MyContainer";
 import { Link } from "react-router";
+
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { auth } from "../firebase/firebase.init";
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from "@firebase/auth";
+// import { auth } from "../firebase/firebase.init";
+import {
+  GoogleAuthProvider,
+  // sendPasswordResetEmail,
+  // signInWithEmailAndPassword,
+  // signInWithPopup,
+  // signOut
+} from "firebase/auth";
+import Swal from "sweetalert2";
+import { AuthContext } from "../context/AuthContext";
 
-const googleProvider = new GoogleAuthProvider();
+// const googleProvider = new GoogleAuthProvider();
 
 const Login = () => {
-  const [user, setUser] = useState(null);
+  
   const [show, setShow] = useState(false);
+  const {
+    signInWithEmailAndPasswordFunc,
+    signInWithPopupFunc,
+    signOutFunc,
+    user,
+    setUser,
+  } = useContext(AuthContext);
+
+  const emailRef = useRef(null)
+  // const [email, setEmail] = useState(null);
 
   const handlelogin = (e) => {
     e.preventDefault();
@@ -27,46 +46,58 @@ const Login = () => {
       return;
     }
 
-    signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPasswordFunc(email, password)
       .then((res) => {
         console.log(res);
         setUser(res.user);
-        toast.success("Login successful");
+        // toast.success("Login successful");
+        Swal.fire("Login successful!");
       })
       .catch((error) => {
         console.log(error);
-        
+
         toast.error(error.message);
-      
       });
   };
    
    const handleGoogleLogin = ()=>{
-    signInWithPopup(auth, googleProvider)
-      .then((res) => {
-        console.log(res);
-        setUser(res.user);
-        toast.success("Login successful");
-      })
-      .catch((error) => {
-        console.log(error);
-        // toast.error(error.message);
-      });
+   signInWithPopupFunc()
+     .then((res) => {
+       console.log(res);
+       setUser(res.user);
+       toast.success("Login successful");
+     })
+     .catch((error) => {
+       console.log(error);
+       // toast.error(error.message);
+     });
    }
 
     const handleLogout = () =>{
-             signOut(auth)
+             signOutFunc()
                .then(() => {
                  toast.success("Sign-out successful.");
-                 setUser(null)
+                 setUser(null);
                })
                .catch(() => {
-
-                  // toast.error("An error happened.", (error.message));
-                
+                 // toast.error("An error happened.", (error.message));
                });
     }
-  console.log(user);
+    
+  //   const handleForgetPassword = (e)=>{
+  //     console.log(e)
+  //     const email = emailRef.current.value
+  //     sendPasswordResetEmail(auth, email)
+  // .then((res) => {
+  //  Swal.fire("Password reset email sent!!");
+  //   // ..
+  // })
+  // .catch((e) => {
+  //   toast.error("Password reset email sent!!", e.message);
+  //   })
+  // }
+
+  // console.log(email);
 
   return (
     <MyContainer className="  ">
@@ -114,6 +145,9 @@ const Login = () => {
                   <input
                     type="email"
                     name="email"
+                    ref={emailRef}
+                    // value={email}
+                    // onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email"
                     className="input w-full mb-2"
                   />
@@ -137,47 +171,35 @@ const Login = () => {
                   <div>
                     {/* <a className="link link-hover">Forgot password?</a> */}
                   </div>
-                  <button className="my-btn mt-4">Log In</button>
+                  <button
+                    // onClick={handleForgetPassword}
+                    type="button"
+                    className="hover:underline cursor-pointer"
+                  >
+                    Forget password?
+                  </button>
+                  <button type="submit" className="my-btn mt-4">
+                    Log In
+                  </button>
                   <p className="text-center font-bold text-gray-500">OR </p>
                   <div className="text-center">
                     {/* Google */}
                     <button onClick={handleGoogleLogin} className="my-btn">
-                      <svg
-                        aria-label="Google logo"
-                        width="16"
-                        height="16"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
-                      >
-                        <g>
-                          <path d="m0 0H512V512H0" fill="#fff"></path>
-                          <path
-                            fill="#34a853"
-                            d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"
-                          ></path>
-                          <path
-                            fill="#4285f4"
-                            d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"
-                          ></path>
-                          <path
-                            fill="#fbbc02"
-                            d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"
-                          ></path>
-                          <path
-                            fill="#ea4335"
-                            d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"
-                          ></path>
-                        </g>
-                      </svg>
+                      <img
+                        width="28"
+                        height="28"
+                        src="https://img.icons8.com/color/48/google-logo.png"
+                        alt="google-logo"
+                      />
                       Login with Google
                     </button>
 
-                    <p className="mt-2">Already have an account ? </p>
+                    <p className="mt-2">New to this website ? </p>
                     <Link
                       to="/signup"
                       className="text-blue-500 underline font-bold mt-4"
                     >
-                      SignUp
+                      Sign Up
                     </Link>
                   </div>
                 </form>

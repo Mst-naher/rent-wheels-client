@@ -1,20 +1,33 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import MyContainer from "../Components/MyContainer/MyContainer";
 import { Link } from "react-router";
-import { createUserWithEmailAndPassword } from "firebase/auth/web-extension";
-import { auth } from "../firebase/firebase.init";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
+import { AuthContext } from "../context/AuthContext";
+
 const Signup = () => {
   const [show, setShow] = useState(false);
+  const { createUserWithEmailAndPasswordFunc, updateProfileFunc } =
+    useContext(AuthContext);
+  // console.log(result);
 
   const handleSignup = (e) => {
     e.preventDefault();
+    const displayName = e.target.name?.value;
+    const photoURL = e.target.photo?.value;
     const email = e.target.email?.value;
     const password = e.target.password?.value;
 
-    // console.log("signup function entered", { email, password });
+
+
+    console.log("signup function entered", {
+      displayName,
+      photoURL,
+      email,
+      password,
+    });
+    // return;
 
     // const regex = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
     // if (!regex.test(password)) {
@@ -23,22 +36,32 @@ const Signup = () => {
     //   );
     //   return;
     // }
-
-    createUserWithEmailAndPassword(auth, email, password)
+       // 1st step: create user
+    createUserWithEmailAndPasswordFunc(email, password)
       .then((res) => {
+        // 2nd step: Update profile
+       updateProfileFunc(displayName, photoURL)
+         .then((res) => {
+           console.log(res);
+           toast.success("Signup successful");
+         })
+         .catch((e) => {
+          console.log(e);
+           toast.error(e.message);
+         });
         console.log(res);
         toast.success("Signup successful");
       })
       .catch((error) => {
+        console.log(e);
         console.log(error);
         console.log(error.code);
         toast.error(error.message);
-        
+
         if (error.code == "auth/email-already-in-use") {
           toast.error("User is already exist in database.");
         }
       });
-
   };
 
   return (
@@ -63,6 +86,22 @@ const Signup = () => {
                 Please Register your account{" "}
               </h1>
               <form onSubmit={handleSignup} className="">
+                {/* name field */}
+                <label className="block text-sm font-medium mb-1">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Bilkis Naher"
+                  className="input input-bordered w-full mb-2  bg-gray-300 font-semibold text-xl  focus:outline-none focus:ring-2 focus:ring-pink-400"
+                />
+                {/* photo field */}
+                <label className="block text-sm font-medium mb-1">Photo</label>
+                <input
+                  type="text"
+                  name="photo"
+                  placeholder="Your photo url here"
+                  className="input input-bordered w-full mb-2  bg-gray-300 font-semibold text-xl  focus:outline-none focus:ring-2 focus:ring-pink-400"
+                />
                 {/* email field */}
                 <label className="label">Email</label>
                 <input
@@ -96,33 +135,12 @@ const Signup = () => {
                 <div className="text-center">
                   {/* Google */}
                   <button className="my-btn">
-                    <svg
-                      aria-label="Google logo"
-                      width="16"
-                      height="16"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 512 512"
-                    >
-                      <g>
-                        <path d="m0 0H512V512H0" fill="#fff"></path>
-                        <path
-                          fill="#34a853"
-                          d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"
-                        ></path>
-                        <path
-                          fill="#4285f4"
-                          d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"
-                        ></path>
-                        <path
-                          fill="#fbbc02"
-                          d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"
-                        ></path>
-                        <path
-                          fill="#ea4335"
-                          d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"
-                        ></path>
-                      </g>
-                    </svg>
+                    <img
+                      width="28"
+                      height="28"
+                      src="https://img.icons8.com/color/48/google-logo.png"
+                      alt="google-logo"
+                    />
                     Login with Google
                   </button>
 

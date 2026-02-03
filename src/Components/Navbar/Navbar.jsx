@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router";
 import logo from "../../assets/img/logo.png";
 import MyContainer from "../MyContainer/MyContainer";
 import MyLink from "../MyLink/MyLink";
+import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
+  
+  const {user} = useContext(AuthContext);
+  console.log(user);
+ 
   const links = (
     <>
       <li>
@@ -65,9 +70,9 @@ const Navbar = () => {
             </ul>
           </div>
           {/* <a className="btn btn-ghost text-xl">RentWheels</a> */}
-          <figure>
+          <Link to="/" >
             <img className="w-13.75" src={logo} alt="" />
-          </figure>
+          </Link >
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>

@@ -14,6 +14,7 @@ import BrowsCars from './Components/BrowsCars/BrowsCars.jsx';
 import Login from './Pages/Login.jsx';
 import Signup from './Pages/Signup.jsx';
 import { ToastContainer } from 'react-toastify';
+import AuthProvider from './context/AuthProvider.jsx';
 
 
 
@@ -57,7 +58,9 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />,
+   <AuthProvider >
+     <RouterProvider router={router} />,
     <ToastContainer/>
+   </AuthProvider>
   </StrictMode>,
 );
