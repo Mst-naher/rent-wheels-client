@@ -9,5 +9,9 @@
 }
 
 .my-btn{
-  @apply btn w-full bg-gradient-to-r from-indigo-600 via-purple-400 to-pink-800 text-white font-semibold border-none hover:scale-105 transition-transform duration-200 mb-2;
+  @apply btn w-full bg-gradient-to-r from-indigo-900 via-purple-400 to-pink-900 text-white font-semibold border-none hover:scale-105 transition-transform duration-200 mb-2 shadow-xl ;
+}
+
+.btn-nav{
+  @apply md:px-2 lg:px-5 font-bold rounded-lg text-white bg-linear-to-r from-indigo-900 via-purple-300 to-pink-900  hover:scale-105 transition-transform duration-200 shadow-xl;
 }

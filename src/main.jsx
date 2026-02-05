@@ -15,6 +15,7 @@ import Login from './Pages/Login.jsx';
 import Signup from './Pages/Signup.jsx';
 import { ToastContainer } from 'react-toastify';
 import AuthProvider from './context/AuthProvider.jsx';
+import PrivateRoute from './privateRoute/PrivateRoute.jsx';
 
 
 
@@ -22,37 +23,44 @@ const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
-    children:[
-          {
-            index: true,
-            Component:Home
-          },
-          {
-            path:'addCar',
-            Component: AddCar
-          },
-          {
-            path:'myListing',
-            Component: MyListing
-          },
-          {
-            path:'myBooking',
-            Component: MyBooking
-          },
-          {
-            path:'browsCars',
-            Component: BrowsCars
-          },
-          {
-            path:'login',
-           element: <Login/>
-          },
-          {
-            path:'signup',
-            element: <Signup/>
-          },
-         
-    ] 
+    children: [
+      {
+        index: true,
+        Component: Home,
+      },
+      {
+        path: "addCar",
+        Component: AddCar,
+      },
+      {
+        path: "myListing",
+        element: (
+          <PrivateRoute>
+            <MyListing></MyListing>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "myBooking",
+        element: (
+          <PrivateRoute>
+            <MyBooking></MyBooking>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "browsCars",
+        Component: BrowsCars,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "signup",
+        element: <Signup />,
+      },
+    ],
   },
 ]);
 

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import MyContainer from "../Components/MyContainer/MyContainer";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -8,9 +8,15 @@ import { AuthContext } from "../context/AuthContext";
 
 const Signup = () => {
   const [show, setShow] = useState(false);
-  const { createUserWithEmailAndPasswordFunc, updateProfileFunc } =
-    useContext(AuthContext);
+  const {
+    createUserWithEmailAndPasswordFunc,
+    updateProfileFunc,
+    setLoading,
+    signOutFunc,
+    setUser,
+  } = useContext(AuthContext);
   // console.log(result);
+  const navigate = useNavigate();
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -18,8 +24,6 @@ const Signup = () => {
     const photoURL = e.target.photo?.value;
     const email = e.target.email?.value;
     const password = e.target.password?.value;
-
-
 
     console.log("signup function entered", {
       displayName,
@@ -29,29 +33,31 @@ const Signup = () => {
     });
     // return;
 
-    // const regex = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
-    // if (!regex.test(password)) {
-    //   toast.error(
-    //     "Password must be at least 6 characters long and contain at least one uppercase and one lowercase letter",
-    //   );
-    //   return;
-    // }
-       // 1st step: create user
+    const regex = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
+    if (!regex.test(password)) {
+      toast.error(
+        "Password must be at least 6 characters long and contain at least one uppercase and one lowercase letter",
+      );
+      return;
+    }
+    // 1st step: create user
     createUserWithEmailAndPasswordFunc(email, password)
       .then((res) => {
         // 2nd step: Update profile
-       updateProfileFunc(displayName, photoURL)
-         .then((res) => {
-           console.log(res);
-           toast.success("Signup successful");
-         })
-         .catch((e) => {
-          console.log(e);
-           toast.error(e.message);
-         });
+        updateProfileFunc(displayName, photoURL)
+          .then((res) => {
+            console.log(res);
+            setLoading(false);
+            toast.success("Signup successful");
+          })
+          .catch((e) => {
+            console.log(e);
+            toast.error(e.message);
+          });
         console.log(res);
         toast.success("Signup successful");
       })
+
       .catch((error) => {
         console.log(e);
         console.log(error);
@@ -61,6 +67,17 @@ const Signup = () => {
         if (error.code == "auth/email-already-in-use") {
           toast.error("User is already exist in database.");
         }
+      });
+
+    signOutFunc()
+      .then(() => {
+        toast.success("Sign-out successful.");
+        setUser(null);
+        
+        navigate('/login');
+      })
+      .catch(() => {
+        // toast.error("An error happened.", (error.message));
       });
   };
 
@@ -91,7 +108,7 @@ const Signup = () => {
                 <input
                   type="text"
                   name="name"
-                  placeholder="Bilkis Naher"
+                  placeholder="Your name"
                   className="input input-bordered w-full mb-2  bg-gray-300 font-semibold text-xl  focus:outline-none focus:ring-2 focus:ring-pink-400"
                 />
                 {/* photo field */}
