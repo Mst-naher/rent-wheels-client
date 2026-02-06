@@ -7,7 +7,7 @@ import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import RootLayout from './Components/RootLayout/RootLayout.jsx';
 import Home from './Components/Home/Home.jsx';
-import AddCar from './Components/AddCar/AddCar.jsx';
+
 import MyListing from './Components/MyListing/MyListing.jsx';
 import MyBooking from './Components/MyBooking/MyBooking.jsx';
 import BrowsCars from './Components/BrowsCars/BrowsCars.jsx';
@@ -16,6 +16,8 @@ import Signup from './Pages/Signup.jsx';
 import { ToastContainer } from 'react-toastify';
 import AuthProvider from './context/AuthProvider.jsx';
 import PrivateRoute from './privateRoute/PrivateRoute.jsx';
+import FeaturedCars from './Components/FeaturedCars/FeaturedCars.jsx';
+import AddCar from './Pages/AddCar/AddCar.jsx';
 
 
 
@@ -27,6 +29,11 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
+        loader: () => fetch("http://localhost:3000/products"),
+      },
+      {
+        path: "featuredCars",
+        Component: FeaturedCars,
       },
       {
         path: "addCar",
