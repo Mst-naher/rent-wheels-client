@@ -43,9 +43,14 @@ const router = createBrowserRouter([
         path: "myListing",
         element: (
           <PrivateRoute>
-            <MyListing></MyListing>
+            <MyListing>
+              
+            </MyListing>
+
           </PrivateRoute>
         ),
+        loader: ()=> fetch("http://localhost:3000/users"),
+               
       },
       {
         path: "myBooking",

@@ -1,8 +1,15 @@
 import React, { useContext } from "react";
 import MyContainer from "../../Components/MyContainer/MyContainer";
 import { AuthContext } from "../../context/AuthContext";
+import { toast } from "react-toastify";
+// import MyListing from "../../Components/MyListing/MyListing";
+
+
+// const userPromise = fetch("http://localhost:3000/users").then(res=> res.json());
 
 const AddCar = () => {
+    
+
   const { user } = useContext(AuthContext);
   console.log(user);
   const handleSubmit = (e) => {
@@ -12,7 +19,7 @@ const AddCar = () => {
       category: e.target.category.value,
       carRent: e.target.price.value,
       location: e.target.location.value,
-      providerPhotoUrl: e.target.photo.value,
+      name: e.target.photourl?.value || "",
       providerName: e.target.providerName.value,
       carName: e.target.carName.value,
       created_by: user.email,
@@ -20,24 +27,31 @@ const AddCar = () => {
     };
     console.log(formData);
 
-    fetch("http://localhost:3000/products", {
+    fetch("http://localhost:3000/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+      .then(res => res.json())
+      .then(data => {
+        console.log("after saving user", data);
+        if (data.insertedId) {
+          formData._id = data.insertedId;
+          const newUsers = [...user, formData];
+          setUsers(newUsers)
+          toast.success("user added successfully");
+          e.target.reset();
+        }
       })
       .catch((error) => {
         console.log("Error", error);
       });
-    
   };
   return (
     <MyContainer className="m-10">
+      {/* <MyListing  userPromise={userPromise}></MyListing> */}
       <div className="card bg-base-200 w-full mx-auto max-w-lg shrink-0 shadow-xl ">
         <h4 className="text-2xl font-bold text-center text-gray-600 underline m-5">
           Car Selection
@@ -114,8 +128,8 @@ const AddCar = () => {
                     className="select select-primary bg-base-100 w-full"
                   >
                     <option disabled={true}>Seclect your location</option>
-                    <option> Electric</option>
-                    <option> Luxury</option>
+                    <option> Oxford, UK</option>
+                    <option> Manchester, UK</option>
                   </select>
                 </fieldset>
               </div>
@@ -123,11 +137,11 @@ const AddCar = () => {
               <div>
                 <fieldset>
                   <label className="block text-sm font-medium mb-1">
-                    Photo
+                    Hosted photo url
                   </label>
                   <input
-                    type="text"
-                    name="photo"
+                    type="url"
+                    name="photourl"
                     placeholder="Your photo url here"
                     className="input input-bordered w-full mb-2  bg-gray-100 font-sm text-sm  focus:outline-none focus:ring-2 focus:ring-pink-400"
                   />
@@ -137,7 +151,7 @@ const AddCar = () => {
               <div>
                 <fieldset>
                   <label className="block text-sm font-medium mb-1">
-                    Car Rent Price (Par Day)
+                    Car Rent: £ (Par Day)
                   </label>
                   <input
                     type="number"
