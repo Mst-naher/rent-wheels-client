@@ -20,6 +20,11 @@ const Navbar = () => {
         </MyLink>{" "}
       </li>
       <li>
+        <MyLink to={"/allProducts"} className=" ">
+          All Products
+        </MyLink>{" "}
+      </li>
+      <li>
         <MyLink to={"/addCar"} className=" ">
           Add Car
         </MyLink>{" "}

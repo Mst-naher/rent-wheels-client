@@ -18,6 +18,9 @@ import AuthProvider from './context/AuthProvider.jsx';
 import PrivateRoute from './privateRoute/PrivateRoute.jsx';
 import FeaturedCars from './Components/FeaturedCars/FeaturedCars.jsx';
 import AddCar from './Pages/AddCar/AddCar.jsx';
+import ViewDetails from './Components/ViewDetails/ViewDetails.jsx';
+import LatestProducts from './Components/LatestProducts/LatestProducts.jsx';
+import AllProducts from './Components/AllProducts/AllProducts.jsx';
 
 
 
@@ -29,11 +32,25 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
-        loader: () => fetch("http://localhost:3000/products"),
+      },
+      {
+        path: "allProducts",
+        Component: AllProducts,
       },
       {
         path: "featuredCars",
         Component: FeaturedCars,
+      },
+      {
+        path: "latestProducts",
+        Component: LatestProducts,
+        loader: () => fetch("http://localhost:3000/products"),
+      },
+      {
+        path: "viewDetails/:id",
+        // loader: ({ params }) =>
+        // fetch(`http://localhost:3000/products/${params._id}`),
+        Component: ViewDetails,
       },
       {
         path: "addCar",
@@ -43,14 +60,10 @@ const router = createBrowserRouter([
         path: "myListing",
         element: (
           <PrivateRoute>
-            <MyListing>
-              
-            </MyListing>
-
+            <MyListing></MyListing>
           </PrivateRoute>
         ),
-        loader: ()=> fetch("http://localhost:3000/users"),
-               
+        loader: () => fetch("http://localhost:3000/users"),
       },
       {
         path: "myBooking",

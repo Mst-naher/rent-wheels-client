@@ -6,10 +6,10 @@ import { FaMagnifyingGlass, FaTrashCan } from "react-icons/fa6";
 import Swal from "sweetalert2";
 
 const MyListing = () => {
-  const users = useLoaderData();
-  console.log(users);
+  const loaderData = useLoaderData();
+  console.log(loaderData);
 
-  const [myListing, setMyListing] = useState(users);
+  const [myListing, setMyListing] = useState(loaderData);
 
   const handleUserDelete = (id) => {
     console.log(id);
@@ -24,26 +24,25 @@ const MyListing = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-       
-
         fetch(`http://localhost:3000/users/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
+            
+            if (data.deletedCount > 0) {
+              const remaining = myListing.filter((user) => user._id !== id);
+              setMyListing(remaining);
+            }
+             Swal.fire({
+               title: "Deleted!",
+               text: "Your car has been deleted.",
+               icon: "success",
+             });
           });
-
-          if(users.deletedCount > 0){
- const remaining = myListing.filter((user) => user._id !== id);
- setMyListing(remaining);
-          }
-
-         Swal.fire({
-           title: "Deleted!",
-           text: "Your car has been deleted.",
-           icon: "success",
-         });
+       
+       
       }
     });
   };
