@@ -22,6 +22,7 @@ import ViewDetails from "./Components/ViewDetails/ViewDetails.jsx";
 import LatestProducts from "./Components/LatestProducts/LatestProducts.jsx";
 import AllProducts from "./Components/AllProducts/AllProducts.jsx";
 import Brands from "./Components/Brands/Brands.jsx";
+import Services from "./Pages/Services/Services.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "bands",
         Component: Brands,
+      },
+      {
+        path: "services",
+        Component: Services,
       },
       {
         path: "allProducts",

@@ -7,7 +7,7 @@ import { MdOutlineMail } from "react-icons/md";
 
 const Footer = () => {
   return (
-    <div className="bg-black">
+    <div className=" bg-gradient-to-r from-indigo-900 via-purple-300 to-pink-900 mt-10">
       <MyContainer>
         <footer className="grid grid-cols-1  md:grid-cols-2  lg:grid-cols-5 text-primary-content p-10 gap-7 ">
           <div>

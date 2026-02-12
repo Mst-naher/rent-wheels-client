@@ -11,7 +11,7 @@ const Fedbacks = ({ fedbackPromise }) => {
   return (
     <div className="my-24">
       <div className="text-center mb-24">
-        <h3 className="text-center text-3xl text-gray-600 font-bold my-8">Fedbacks</h3>
+        <h3 className="text-center text-3xl text-gray-600 font-bold my-8">Feedbacks</h3>
         <p className='text-gray-400'>
           Rent Wheels provided outstanding service with clean vehicles,
           affordable prices, and a smooth booking process. The staff was

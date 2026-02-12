@@ -67,7 +67,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar bg-base-200 shadow-sm">
+    <div className="navbar  shadow-sm bg-linear-to-r from-indigo-900 via-purple-300 to-pink-900">
       <MyContainer className="flex items-center justify-between">
         <div className="navbar-start">
           <div className="dropdown">

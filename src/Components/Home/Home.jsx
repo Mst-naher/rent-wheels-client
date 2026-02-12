@@ -8,6 +8,7 @@ import Banner from "../Banner/Banner";
 import WhyRent from "../WhyRent/WhyRent";
 import Brands from "../Brands/Brands";
 import Fedbacks from "../../Pages/Reviews/Fedbacks";
+import Services from "../../Pages/Services/Services";
 
 const Home = () => {
  const fedbackPromise = fetch('/fedback.json').then(res=>res.json());
@@ -36,8 +37,9 @@ const Home = () => {
           </Suspense>
         </section>
         <section>
-        <div>Extra Sections</div>
-
+          <div>
+            <Services></Services>
+          </div>
         </section>
       </div>
     </MyContainer>

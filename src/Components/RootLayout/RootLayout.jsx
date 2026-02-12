@@ -5,7 +5,7 @@ import Footer from '../Footer/Footer';
 
 const RootLayout = () => {
   return (
-    <div>
+    <div className=" bg-gradient-to-r from-indigo-300 via-purple-200 to-purple-300">
       <Navbar></Navbar>
       <Outlet></Outlet>
       <Footer></Footer>
