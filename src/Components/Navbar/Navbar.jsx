@@ -19,11 +19,7 @@ const Navbar = () => {
           Home
         </MyLink>{" "}
       </li>
-      <li>
-        <MyLink to={"/allProducts"} className=" ">
-          All Products
-        </MyLink>{" "}
-      </li>
+
       <li>
         <MyLink to={"/addCar"} className=" ">
           Add Car
@@ -35,6 +31,11 @@ const Navbar = () => {
           <li>
             <MyLink to={"/myListing"} className=" ">
               My Listing
+            </MyLink>{" "}
+          </li>
+          <li>
+            <MyLink to={"/allProducts"} className=" ">
+              All Products
             </MyLink>{" "}
           </li>
 

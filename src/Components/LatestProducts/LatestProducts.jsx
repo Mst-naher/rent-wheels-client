@@ -4,7 +4,7 @@ import { Link} from "react-router";
 const LatestProducts = () => {
  
   const [products, setProducts] = useState([]);
-  const {_id} = products;
+  // const {_id} = products;
 
   useEffect(() => {
     fetch("http://localhost:3000/products")
@@ -52,7 +52,7 @@ const LatestProducts = () => {
                 </button>
               </div>
               <Link
-                to={`/viewDetails/${_id}`}
+                to={`/viewDetails/${product._id}`}
                 className="btn btn-primary btn-sm hover:scale-110 transition-discrete flex-1"
               >
                 View Details

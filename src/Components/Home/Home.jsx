@@ -11,6 +11,7 @@ import Fedbacks from "../../Pages/Reviews/Fedbacks";
 import Services from "../../Pages/Services/Services";
 
 const Home = () => {
+  
  const fedbackPromise = fetch('/fedback.json').then(res=>res.json());
 
   return (

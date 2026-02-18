@@ -2,14 +2,8 @@ import React, { useContext } from "react";
 import MyContainer from "../../Components/MyContainer/MyContainer";
 import { AuthContext } from "../../context/AuthContext";
 import { toast } from "react-toastify";
-// import MyListing from "../../Components/MyListing/MyListing";
-
-
-// const userPromise = fetch("http://localhost:3000/users").then(res=> res.json());
 
 const AddCar = () => {
-    
-
   const { user } = useContext(AuthContext);
   console.log(user);
   const handleSubmit = (e) => {
@@ -27,20 +21,20 @@ const AddCar = () => {
     };
     console.log(formData);
 
-    fetch("http://localhost:3000/users", {
+    fetch("http://localhost:3000/addedCars", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         console.log("after saving user", data);
         if (data.insertedId) {
           formData._id = data.insertedId;
           const newUsers = [...user, formData];
-          setUsers(newUsers)
+          setUsers(newUsers);
           toast.success("user added successfully");
           e.target.reset();
         }
@@ -172,6 +166,8 @@ const AddCar = () => {
                     name="providerName"
                     placeholder="Provider Name"
                     className="input input-bordered w-full mb-2  bg-gray-100 font-sm text-sm  focus:outline-none focus:ring-2 focus:ring-pink-400"
+                    readOnly
+                    defaultValue={user?.displayName}
                   />
                 </fieldset>
               </div>
@@ -186,6 +182,8 @@ const AddCar = () => {
                     name="email"
                     placeholder="Provider Email"
                     className="input input-bordered w-full mb-2  bg-gray-100 font-sm text-sm  focus:outline-none focus:ring-2 focus:ring-pink-400"
+                    readOnly
+                    defaultValue={user?.email}
                   />
                 </fieldset>
               </div>

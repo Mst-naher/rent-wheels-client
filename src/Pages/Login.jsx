@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { AuthContext } from "../context/AuthContext";
+import { FcGoogle } from "react-icons/fc";
 // import { GoogleAuthProvider } from "firebase/auth";
 
 // const googleProvider = new GoogleAuthProvider();
@@ -42,11 +43,11 @@ const Login = () => {
 
     console.log("login function entered", { email, password });
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      toast.error("Please enter a valid email address");
-      return;
-    }
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailRegex.test(email)) {
+    //   toast.error("Please enter a valid email address");
+    //   return;
+    // }
 
     const regex = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
     if (!regex.test(password)) {
@@ -167,28 +168,32 @@ const Login = () => {
                 <button type="submit" className="my-btn mt-4">
                   Log In
                 </button>
-                <p className="text-center font-bold text-gray-500">OR </p>
-                <div className="text-center">
-                  {/* Google */}
-                  <button onClick={handleGoogleLogin} className="my-btn">
-                    <img
-                      width="28"
-                      height="28"
-                      src="https://img.icons8.com/color/48/google-logo.png"
-                      alt="google-logo"
-                    />
-                    Login with Google
-                  </button>
-
-                  <p className="mt-2">New to this website ? </p>
-                  <Link
-                    to="/signup"
-                    className="text-blue-500 underline font-bold mt-4"
-                  >
-                    Sign Up
-                  </Link>
-                </div>
               </form>
+              {/* Google */}
+              <button
+                type="button"
+                onClick={handleGoogleLogin}
+                className="my-btn"
+              >
+                <FcGoogle className="w-8 h-8 " />
+                {/* <img
+                  width="28"
+                  height="28"
+                  src=""
+                  alt="google-logo"
+                /> */}
+                Login with Google
+              </button>
+              <p className="text-center font-bold text-gray-500">OR </p>
+              <div className="text-center">
+                <p className="mt-2">New to this website ? </p>
+                <Link
+                  to="/signup"
+                  className="text-blue-500 underline font-bold mt-4"
+                >
+                  Sign Up
+                </Link>
+              </div>
             </div>
           </div>
         </div>

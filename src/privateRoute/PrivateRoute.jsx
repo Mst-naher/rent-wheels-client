@@ -18,11 +18,12 @@ return (
 }
 
 
-if(!user){
-return <Navigate to="/login" state={location.pathname}></Navigate>
+if(user){
+  return children;
 }
+return <Navigate to="/signup" state={location?.pathname}></Navigate>
 
-  return children
+  
 };
 
 export default PrivateRoute;

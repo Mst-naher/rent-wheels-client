@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLoaderData } from "react-router";
 import MyContainer from "../MyContainer/MyContainer";
 import { FiEdit } from "react-icons/fi";
-import { FaMagnifyingGlass, FaTrashCan } from "react-icons/fa6";
+import { FaTrashCan } from "react-icons/fa6";
 import Swal from "sweetalert2";
 
 const MyListing = () => {
@@ -24,33 +24,41 @@ const MyListing = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/users/${id}`, {
+        fetch(`http://localhost:3000/addedCars/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
-            
+
             if (data.deletedCount > 0) {
               const remaining = myListing.filter((user) => user._id !== id);
               setMyListing(remaining);
             }
-             Swal.fire({
-               title: "Deleted!",
-               text: "Your car has been deleted.",
-               icon: "success",
-             });
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your car has been deleted.",
+              icon: "success",
+            });
           });
-       
-       
       }
     });
   };
 
+  const handleUserUpdate = (id) => {
+    console.log("updated by clicking", id);
+  };
+
+  // const handleUserBooking = (id) => {
+  //   console.log("post clicked here", id);
+  // };
+
   return (
     <MyContainer>
       <div>
-        <h1>this is my MyListing :{myListing.length}</h1>
+        <h1 className="m-5 text-xl font-bold underline text-center text-gray-500">
+          Total Car List : {myListing.length}
+        </h1>
         <div>
           {/* {users.map((user) => (
             <p key={user._id}>
@@ -61,7 +69,7 @@ const MyListing = () => {
         <div className="overflow-x-auto">
           <table className="table table-zebra">
             {/* head */}
-            <thead>
+            <thead className="text-bold text-lg">
               <tr>
                 <th></th>
                 <th>Car Name</th>
@@ -72,23 +80,28 @@ const MyListing = () => {
               </tr>
             </thead>
             <tbody>
-              {myListing.map((user, index) => (
-                <tr key={user._id}>
+              {myListing.map((car, index) => (
+                <tr key={car._id}>
                   <th>{index + 1}</th>
-                  <td>{user.carName}</td>
-                  <td>{user.category}</td>
-                  <td>{user.carRent}</td>
-                  <td>{user.status}</td>
+                  <td>{car.carName}</td>
+                  <td>{car.category}</td>
+                  <td>{car.rentPrice}</td>
+                  <td
+                    className="" 
+                  >
+                    {car.status}
+                  </td>
+
                   <td>
-                    <button className="btn btn-square  hover:bg-primary">
+                    <button
+                      onClick={() => handleUserUpdate(car._id)}
+                      className="btn btn-square bg-amber-300 hover:bg-primary mr-2"
+                    >
                       <FiEdit />
                     </button>
-                    <button className="btn btn-square  hover:bg-primary mx-2">
-                      <FaMagnifyingGlass />
-                    </button>
                     <button
-                      onClick={() => handleUserDelete(user._id)}
-                      className="btn btn-square  hover:bg-primary"
+                      onClick={() => handleUserDelete(car._id)}
+                      className="btn btn-square bg-purple-300 hover:bg-primary"
                     >
                       <FaTrashCan />
                     </button>

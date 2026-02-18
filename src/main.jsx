@@ -23,11 +23,14 @@ import LatestProducts from "./Components/LatestProducts/LatestProducts.jsx";
 import AllProducts from "./Components/AllProducts/AllProducts.jsx";
 import Brands from "./Components/Brands/Brands.jsx";
 import Services from "./Pages/Services/Services.jsx";
+import ErrorPage from "./Pages/ErrorPage/ErrorPage.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
+    element: <ErrorPage />,
+    hydrateFallbckElement: <p>Loading...</p>,
     children: [
       {
         index: true,
@@ -55,10 +58,10 @@ const router = createBrowserRouter([
         loader: () => fetch("http://localhost:3000/products"),
       },
       {
-        path: "viewDetails/:id",
-        // loader: ({ params }) =>
-        // fetch(`http://localhost:3000/products/${params._id}`),
+        path: "/viewDetails/:id",
         Component: ViewDetails,
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/products/${params.id}`),
       },
       {
         path: "addCar",
@@ -71,7 +74,7 @@ const router = createBrowserRouter([
             <MyListing></MyListing>
           </PrivateRoute>
         ),
-        loader: () => fetch("http://localhost:3000/users"),
+        loader: () => fetch("http://localhost:3000/addedCars"),
       },
       {
         path: "myBooking",
@@ -80,6 +83,8 @@ const router = createBrowserRouter([
             <MyBooking></MyBooking>
           </PrivateRoute>
         ),
+        // loader: ({ params }) =>
+        // fetch(`http://localhost:3000/users/${params._id}`),
       },
       {
         path: "browsCars",
@@ -94,6 +99,10 @@ const router = createBrowserRouter([
         element: <Signup />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);
 

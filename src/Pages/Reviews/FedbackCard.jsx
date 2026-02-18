@@ -8,7 +8,7 @@ const FedbackCard = ({ fedback }) => {
   return (
     <div className="max-w-md p-6 bg-purple-100 rounded-2xl shadow-lg">
       {/* Quote icon */}
-      <FaQuoteLeft className="text-blue-800 text-3xl mb-4" />
+      <FaQuoteLeft className="text-blue-800 md:text-3xl mb-4" />
 
       {/* Divider */}
       <div className="border-t border-dashed border-blue-400 my-6"></div>
@@ -27,7 +27,7 @@ const FedbackCard = ({ fedback }) => {
         {/* Name & role */}
         <div>
           <h4 className="font-semibold text-blue-900 text-center underline">{userName}</h4>
-          <p className="text-sm text-gray-500">Senior Product Designer</p>
+          <p className="text-sm text-gray-500 text-center">Senior Product Designer</p>
         </div>
         {/* Quote text */}
         <p className="mb-4 text-center text-pink-700">{testimonial}</p>
