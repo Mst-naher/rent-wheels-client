@@ -49,9 +49,7 @@ const MyListing = () => {
     console.log("updated by clicking", id);
   };
 
-  // const handleUserBooking = (id) => {
-  //   console.log("post clicked here", id);
-  // };
+ 
 
   return (
     <MyContainer>

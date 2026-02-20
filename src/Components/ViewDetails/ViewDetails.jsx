@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLoaderData} from 'react-router';
+import { Link, useLoaderData} from 'react-router';
 import MyContainer from '../MyContainer/MyContainer';
 import { FaLongArrowAltLeft } from 'react-icons/fa';
 
@@ -8,6 +8,7 @@ const ViewDetails = () => {
 const product = useLoaderData();
  console.log('after clicked view button', product)
  const { carName, imageUrl, carType } = product;
+    
 
 
 
@@ -78,7 +79,7 @@ const product = useLoaderData();
                 <p>Rent per day : £ {product.rentPricePerDay}</p>
               </div>
               <div className=" py-3 shadow-2xl rounded-2xl p-3 m-7  hover:scale-105 transition-transform duration-200">
-                <button className="my-btn">Book Now</button>
+                <Link to={`/myBooking/${product._id }`} className="my-btn">Book Now</Link >
               </div>
             </div>
           </div>

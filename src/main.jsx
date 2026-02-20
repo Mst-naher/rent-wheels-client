@@ -24,6 +24,7 @@ import AllProducts from "./Components/AllProducts/AllProducts.jsx";
 import Brands from "./Components/Brands/Brands.jsx";
 import Services from "./Pages/Services/Services.jsx";
 import ErrorPage from "./Pages/ErrorPage/ErrorPage.jsx";
+import user from "./context/AuthProvider.jsx"
 
 const router = createBrowserRouter([
   {
@@ -83,8 +84,8 @@ const router = createBrowserRouter([
             <MyBooking></MyBooking>
           </PrivateRoute>
         ),
-        // loader: ({ params }) =>
-        // fetch(`http://localhost:3000/users/${params._id}`),
+        loader: () =>
+          fetch(`http://localhost:3000/bookings?email=${user.email }`),
       },
       {
         path: "browsCars",
