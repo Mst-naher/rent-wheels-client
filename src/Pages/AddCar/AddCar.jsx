@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import MyContainer from "../../Components/MyContainer/MyContainer";
 import { AuthContext } from "../../context/AuthContext";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddCar = () => {
   const { user } = useContext(AuthContext);
@@ -33,10 +34,8 @@ const AddCar = () => {
         console.log("after saving user", data);
         if (data.insertedId) {
           formData._id = data.insertedId;
-          const newUsers = [...user, formData];
-          setUsers(newUsers);
-          toast.success("user added successfully");
           e.target.reset();
+          toast.success("user added successfully");
         }
       })
       .catch((error) => {
@@ -45,6 +44,7 @@ const AddCar = () => {
   };
   return (
     <MyContainer className="m-10">
+      
       {/* <MyListing  userPromise={userPromise}></MyListing> */}
       <div className="card bg-base-200 w-full mx-auto max-w-lg shrink-0 shadow-xl ">
         <h4 className="text-2xl font-bold text-center text-gray-600 underline m-5">

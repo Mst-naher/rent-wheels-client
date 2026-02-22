@@ -20,14 +20,13 @@ const Navbar = () => {
         </MyLink>{" "}
       </li>
 
-      <li>
-        <MyLink to={"/addCar"} className=" ">
-          Add Car
-        </MyLink>{" "}
-      </li>
-
       {user && (
         <>
+          <li>
+            <MyLink to={"/addCar"} className=" ">
+              Add Car
+            </MyLink>{" "}
+          </li>
           <li>
             <MyLink to={"/myListing"} className=" ">
               My Listing

@@ -14,6 +14,7 @@ import BrowsCars from "./Components/BrowsCars/BrowsCars.jsx";
 import Login from "./Pages/Login.jsx";
 import Signup from "./Pages/Signup.jsx";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import AuthProvider from "./context/AuthProvider.jsx";
 import PrivateRoute from "./privateRoute/PrivateRoute.jsx";
 import FeaturedCars from "./Components/FeaturedCars/FeaturedCars.jsx";
@@ -24,7 +25,6 @@ import AllProducts from "./Components/AllProducts/AllProducts.jsx";
 import Brands from "./Components/Brands/Brands.jsx";
 import Services from "./Pages/Services/Services.jsx";
 import ErrorPage from "./Pages/ErrorPage/ErrorPage.jsx";
-import user from "./context/AuthProvider.jsx"
 
 const router = createBrowserRouter([
   {
@@ -48,6 +48,7 @@ const router = createBrowserRouter([
       {
         path: "allProducts",
         Component: AllProducts,
+        loader: () => fetch("http://localhost:3000/products"),
       },
       {
         path: "featuredCars",
@@ -61,8 +62,12 @@ const router = createBrowserRouter([
       {
         path: "/viewDetails/:id",
         Component: ViewDetails,
-        loader: ({ params }) =>
-          fetch(`http://localhost:3000/products/${params.id}`),
+        loader: async ({ params }) => {
+          const res = await fetch(
+            `http://localhost:3000/products/${params.id}`,
+          );
+          return res.json();
+        },
       },
       {
         path: "addCar",
@@ -84,8 +89,6 @@ const router = createBrowserRouter([
             <MyBooking></MyBooking>
           </PrivateRoute>
         ),
-        loader: () =>
-          fetch(`http://localhost:3000/bookings?email=${user.email }`),
       },
       {
         path: "browsCars",
@@ -110,8 +113,8 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={router} />,
-      <ToastContainer />
+      <RouterProvider router={router} />
+      <ToastContainer position="top-right" autoClose={3000} />
     </AuthProvider>
   </StrictMode>,
 );
