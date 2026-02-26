@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import MyContainer from "../Components/MyContainer/MyContainer";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 

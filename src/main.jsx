@@ -1,10 +1,13 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.jsx";
 
-import { createBrowserRouter } from "react-router";
-import { RouterProvider } from "react-router/dom";
+// import { createBrowserRouter } from "react-router";
+// import { RouterProvider } from "react-router/dom";
 import RootLayout from "./Components/RootLayout/RootLayout.jsx";
 import Home from "./Components/Home/Home.jsx";
 
@@ -21,10 +24,11 @@ import FeaturedCars from "./Components/FeaturedCars/FeaturedCars.jsx";
 import AddCar from "./Pages/AddCar/AddCar.jsx";
 import ViewDetails from "./Components/ViewDetails/ViewDetails.jsx";
 import LatestProducts from "./Components/LatestProducts/LatestProducts.jsx";
-import AllProducts from "./Components/AllProducts/AllProducts.jsx";
 import Brands from "./Components/Brands/Brands.jsx";
 import Services from "./Pages/Services/Services.jsx";
 import ErrorPage from "./Pages/ErrorPage/ErrorPage.jsx";
+import "react-toastify/dist/ReactToastify.css";
+import CarCard from "./Components/CarCard/CarCard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -45,11 +49,7 @@ const router = createBrowserRouter([
         path: "services",
         Component: Services,
       },
-      {
-        path: "allProducts",
-        Component: AllProducts,
-        loader: () => fetch("http://localhost:3000/products"),
-      },
+     
       {
         path: "featuredCars",
         Component: FeaturedCars,
@@ -93,6 +93,11 @@ const router = createBrowserRouter([
       {
         path: "browsCars",
         Component: BrowsCars,
+        loader: () => fetch("http://localhost:3000/products"),
+      },
+      {
+        path: "carCard",
+        Component: CarCard,
       },
       {
         path: "login",

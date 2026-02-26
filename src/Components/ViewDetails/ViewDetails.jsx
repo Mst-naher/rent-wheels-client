@@ -1,5 +1,5 @@
 import React, { useContext, useRef } from "react";
-import { Link, useLoaderData } from "react-router";
+import { Link, useLoaderData } from "react-router-dom";
 import MyContainer from "../MyContainer/MyContainer";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthContext";
@@ -21,6 +21,7 @@ const ViewDetails = () => {
     carType,
     description,
     providerName,
+    created_by,
     location,
     status,
     rentPricePerDay,
@@ -74,7 +75,7 @@ const ViewDetails = () => {
   return (
     <div>
       <MyContainer>
-        <h1 className="text-xl text-purple-950 font-semibold mt-5 p-2">
+        <h1 className="text-2xl text-purple-950 font-semibold mt-5 p-2 text-center underline">
           {" "}
           Car details{" "}
         </h1>
@@ -86,12 +87,7 @@ const ViewDetails = () => {
                 src={imageUrl}
                 alt={carName}
               />
-              <p
-                className="text-center 
-              text-gray-600 font-bold shadow-xl "
-              >
-                ________________________
-              </p>
+
               <div className="flex justify-between items-center m-5">
                 <p className="font-semibold text-gray-600 bg-purple-200 rounded-md p-1">
                   {carName}
@@ -101,6 +97,12 @@ const ViewDetails = () => {
                 </h3>
               </div>
               <div>
+                <p
+                  className="text-center 
+              text-gray-600 font-bold  "
+                >
+                  ______________________________________________________
+                </p>
                 <p className="text-sm text-gray-500 p-4"> {description}</p>
               </div>
             </div>
@@ -109,29 +111,39 @@ const ViewDetails = () => {
                 <Link to="/" className="flex gap-4 items-center">
                   <FaLongArrowAltLeft /> back to product
                 </Link>
-                <h1 className="text-3xl font-bold text-pink-900 shadow-2xl m-7 py-3 p-3 rounded-2xl">
+                <h1 className="text-3xl font-bold text-pink-900 shadow-2xl m-7 py-3 p-3 rounded-2xl text-center">
                   {carName}
                 </h1>
               </div>
               <div className=" py-3 shadow-2xl rounded-2xl p-3 m-7  hover:scale-105 transition-transform duration-200">
-                <h1 className="text-xl text-gray-500 font-semibold">
+                <h1 className="text-xl text-gray-500 font-semibold m-2 underline text-center">
                   product details
                 </h1>
-                <p className="text-gray-500 text-sm">product ID: {_id}</p>
-                <p className="text-gray-500 text-sm">posted : {createdAt}</p>
+                <p className="text-gray-500 text-sm text-center">
+                  product ID: {_id}
+                </p>
+                <p className="text-gray-500 text-sm text-center">
+                  posted : {createdAt}
+                </p>
               </div>
               <div className=" py-3 shadow-2xl rounded-2xl p-3 m-7  hover:scale-105 transition-transform duration-200">
-                <h2>Provider information</h2>
-                <p>provider name : {providerName}</p>
-                <p>Location : {location}</p>
-                <p>
-                  Status :{" "}
-                  <span className="text-purple-800 bg-purple-100 p-1 rounded-xl">
-                    {" "}
-                    {status}
-                  </span>
-                </p>
-                <p>Rent per day : £ {rentPricePerDay}</p>
+                <h2 className="underline text-center font-semibold m-2">
+                  Provider info:
+                </h2>
+                <div className="text-center">
+                  <p>Provider Name : {providerName}</p>
+                  <p>provider email : {created_by}</p>
+
+                  <p>Location : {location}</p>
+                  <p>
+                    Status :{" "}
+                    <span className="text-purple-800 bg-amber-400 p-1 rounded-xl">
+                      {" "}
+                      {status}
+                    </span>
+                  </p>
+                  <p>Rent per day : £ {rentPricePerDay}</p>
+                </div>
               </div>
               <div className=" py-3 shadow-2xl rounded-2xl p-3 m-7  hover:scale-105 transition-transform duration-200">
                 <button

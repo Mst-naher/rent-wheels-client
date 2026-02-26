@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import bannerImg1 from "../../assets/banner/banner1.webp";
@@ -11,8 +11,24 @@ import bannerImg7 from "../../assets/banner/banner7.jpg";
 import { CgArrowTopRight } from "react-icons/cg";
 import { Link } from "lucide-react";
 import { FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+
+  
+  const handleSubmit = (e)=>{
+     e.preventDefault();
+     const term = search.trim();
+      if (!term) {
+      navigate("/browsCars");
+      return
+    }
+
+    navigate(`/browsCars?q=${encodeURIComponent(search)}`);
+  };
+  
   return (
     <Carousel autoPlay={true} infiniteLoop={true}>
       <div className="relative">
@@ -33,8 +49,23 @@ const Banner = () => {
             Book your car
           </button>
 
+          {/* Search box */}
+          <form onSubmit={handleSubmit}>
+            <div className="relative  w-full md:w-80">
+              <input
+                type="text"
+                placeholder="Search car by name..."
+                className="input input-bordered w-full pr-10"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <button type="submit" className="btn btn-primary">
+                Search
+              </button>
+            </div>
+          </form>
           {/*Search Bar */}
-          <div className="mt-6 w-full max-w-md">
+          {/* <div className="mt-6 w-full max-w-md">
             <div className="flex bg-transparent border border-white rounded-full overflow-hidden">
               <input
                 type="text"
@@ -45,7 +76,7 @@ const Banner = () => {
                 <FaSearch />
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       {/* <div className="relative">

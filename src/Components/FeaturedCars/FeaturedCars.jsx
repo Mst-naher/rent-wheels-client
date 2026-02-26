@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 const FeaturedCars = ({product}) => {
   const {_id, carName, carType, status, imageUrl, rentPricePerDay, providerName } =

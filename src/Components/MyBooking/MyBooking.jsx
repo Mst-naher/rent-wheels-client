@@ -9,16 +9,37 @@ const MyBooking = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
 
+  console.log("token", user.accessToken);
+
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:3000/bookings?email=${user.email}`)
+      fetch(`http://localhost:3000/bookings?email=${user.email}`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
         .then((res) => res.json())
         .then((data) => {
-          console.log("after fetching data from database", data);
+          console.log(data);
           setBookings(data);
         });
     }
   }, [user?.email]);
+
+  // useEffect(() => {
+  //   if (user?.email) {
+  //     fetch(`http://localhost:3000/bookings?email=${user.email}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${user.accessToken}`,
+  //       },
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log("after fetching data from database", data);
+  //         setBookings(data);
+  //       });
+  //   }
+  // }, [user?.email, user.accessToken]);
 
   const handleDeleteBooking = (_id) => {
     Swal.fire({
@@ -43,12 +64,13 @@ const MyBooking = () => {
                 icon: "success",
               });
 
-              // filtering id for delet
-              const remainingBookings = bookings.filter(booking => booking._id !== _id);  
-              setBookings(remainingBookings)
+              // filtering id for delete
+              const remainingBookings = bookings.filter(
+                (booking) => booking._id !== _id,
+              );
+              setBookings(remainingBookings);
             }
           });
-        
       }
     });
   };
@@ -76,48 +98,49 @@ const MyBooking = () => {
               </tr>
             </thead>
             <tbody>
-              {bookings.map((booking, index) => (
-                <tr key={booking._id}>
-                  <th className="md:text-xl text-gray-600">{index + 1}</th>
-                  <td>{booking.carName}</td>
-                  <td>
-                    {booking.rent_name}
-                    <br></br>
-                    {booking.rent_email}
-                  </td>
-                  <td>
-                    <img
-                      className="md:w-20 md:h-14 object-cover rounded"
-                      src={booking.imageUrl}
-                      alt={booking.carName}
-                    />
-                  </td>
-                  {/* <td>{booking.providerName}</td> */}
-                  <td>{booking.rentPrice}</td>
-                  <td>
-                    {booking.status === "pending" ? (
-                      <div className="badge badge-warning">
-                        {booking.status}
-                      </div>
-                    ) : (
-                      <div className="badge badge-success">
-                        {booking.status}
-                      </div>
-                    )}
-                  </td>
-                  <td>
-                    <button className="md:mr-3 btn btn-square bg-purple-300 hover:bg-primary">
-                      <FiEdit />
-                    </button>
-                    <button
-                      onClick={() => handleDeleteBooking(booking._id)}
-                      className="btn btn-square bg-purple-300 hover:bg-primary"
-                    >
-                      <FaTrashCan />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {Array.isArray(bookings) &&
+                bookings.map((booking, index) => (
+                  <tr key={booking._id}>
+                    <th className="md:text-xl text-gray-600">{index + 1}</th>
+                    <td>{booking.carName}</td>
+                    <td>
+                      {booking.rent_name}
+                      <br></br>
+                      {booking.rent_email}
+                    </td>
+                    <td>
+                      <img
+                        className="md:w-20 md:h-14 object-cover rounded"
+                        src={booking.imageUrl}
+                        alt={booking.carName}
+                      />
+                    </td>
+                    {/* <td>{booking.providerName}</td> */}
+                    <td>{booking.rentPrice}</td>
+                    <td>
+                      {booking.status === "pending" ? (
+                        <div className="badge badge-warning">
+                          {booking.status}
+                        </div>
+                      ) : (
+                        <div className="badge badge-success">
+                          {booking.status}
+                        </div>
+                      )}
+                    </td>
+                    <td>
+                      <button className="md:mr-3 btn btn-square bg-purple-300 hover:bg-primary">
+                        <FiEdit />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteBooking(booking._id)}
+                        className="btn btn-square bg-purple-300 hover:bg-primary"
+                      >
+                        <FaTrashCan />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

@@ -10,6 +10,7 @@ const MyListing = () => {
   console.log(loaderData);
 
   const [myListing, setMyListing] = useState(loaderData);
+  
 
   const handleUserDelete = (id) => {
     console.log(id);
@@ -45,11 +46,51 @@ const MyListing = () => {
     });
   };
 
-  const handleUserUpdate = (id) => {
-    console.log("updated by clicking", id);
-  };
+  const handleCarUpdate = (car, id) => {
+    console.log("updated car by clicking", car);
+  
+  
+    Swal.fire({
+      title: "Update Car",
+      input: "select",
+      inputOptions: { Available: "Available", Booked: "Booked" },
+      inputValue: car.status,
 
- 
+      // inputCarName: "Enter new Car name",
+      // inputProviderName: "Enter new Provider name",
+
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/addedCars/${id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ rentPrice: result.value }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.modifiedCount > 0) {
+              const updated = myListing.map((item) =>
+                item._id === id
+                  ? {
+                      ...item,
+                      status: result.value,
+                    }
+                  : item,
+              );
+              setMyListing(updated);
+            }
+          });
+        Swal.fire("Saved!", "update", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+  };
 
   return (
     <MyContainer>
@@ -84,19 +125,18 @@ const MyListing = () => {
                   <td>{car.carName}</td>
                   <td>{car.category}</td>
                   <td>{car.rentPrice}</td>
-                  <td
-                    className="" 
-                  >
-                    {car.status}
-                  </td>
+                  <td className="">{car.status}</td>
 
                   <td>
                     <button
-                      onClick={() => handleUserUpdate(car._id)}
+                      // disabled={!car.rentPrice}
+                      onClick={() => handleCarUpdate(car,)}
                       className="btn btn-square bg-amber-300 hover:bg-primary mr-2"
                     >
                       <FiEdit />
                     </button>
+                 
+
                     <button
                       onClick={() => handleUserDelete(car._id)}
                       className="btn btn-square bg-purple-300 hover:bg-primary"

@@ -13,7 +13,7 @@ const Services = () => {
           Memorable days in life
         </p>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5   ">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5   ">
         <div>
           <img
             className="md:w-[500px] md:h-[400px] object-cover rounded-2xl shadow-2xl overflow-hidden p-2"

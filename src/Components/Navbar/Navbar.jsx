@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import logo from "../../assets/img/logo.png";
 import MyContainer from "../MyContainer/MyContainer";
 import MyLink from "../MyLink/MyLink";
@@ -8,8 +8,7 @@ import { toast } from "react-toastify";
 import { ScaleLoader } from "react-spinners";
 
 const Navbar = () => {
-  const { user, setUser, signOutFunc, loading } =
-    useContext(AuthContext);
+  const { user, setUser, signOutFunc, loading } = useContext(AuthContext);
   console.log(user);
 
   const links = (
@@ -32,11 +31,11 @@ const Navbar = () => {
               My Listing
             </MyLink>{" "}
           </li>
-          <li>
+          {/* <li>
             <MyLink to={"/allProducts"} className=" ">
               All Products
             </MyLink>{" "}
-          </li>
+          </li> */}
 
           <li>
             <MyLink to={"/myBooking"} className=" ">
@@ -104,11 +103,11 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
 
-        <div className="navbar-end ">
+        <div className="navbar-end">
           {loading ? (
             <ScaleLoader color="#724B88" />
           ) : user ? (
-            <div className="text-center space-y-3">
+            <div className="text-center space-y-3 ">
               {/* daisy iu */}
 
               {/* change popover-1 and --anchor-1 names. Use unique names for each dropdown */}
@@ -149,9 +148,10 @@ const Navbar = () => {
               </div>
             </div>
           ) : (
-            <button className="btn btn-nav">
-              <Link to={"/login"}> login</Link>
-            </button>
+            <Link to={"/login"} className="btn btn-nav">
+              {" "}
+              login
+            </Link>
           )}
 
           {/* <button>

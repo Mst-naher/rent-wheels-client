@@ -17,7 +17,6 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-
   const createUserWithEmailAndPasswordFunc = (email, password) => {
     // setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
@@ -25,7 +24,7 @@ const AuthProvider = ({ children }) => {
 
   const updateProfileFunc = (displayName, photoURL) => {
     // setLoading(true);
-    return updateProfile(auth.currentUser, {displayName, photoURL});
+    return updateProfile(auth.currentUser, { displayName, photoURL });
   };
 
   const signInWithEmailAndPasswordFunc = (email, password) => {
@@ -38,10 +37,10 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
 
-  const signOutFunc =()=>{
+  const signOutFunc = () => {
     setLoading(true);
-    return signOut(auth)
-  }
+    return signOut(auth);
+  };
 
   const authInfo = {
     user,
@@ -54,20 +53,33 @@ const AuthProvider = ({ children }) => {
     loading,
     setLoading,
   };
-     
-  useEffect(()=>{
-  const unsubscribe = onAuthStateChanged(auth, (currUser) => {
-      console.log(currUser);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currUser) => {
+      console.log("current user", currUser);
       setUser(currUser);
-      setLoading(false)
+      if (currUser) {
+        const loggedUser = { email: currUser.email };
+        fetch("http://localhost:3000/getToken", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(loggedUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("after getting JWT token", data.token);
+            localStorage.setItem("token", data.token);
+          });
+      }
+      setLoading(false);
     });
 
-    return ()=>{
+    return () => {
       unsubscribe();
-    }
-
-  },[])
-  
+    };
+  }, []);
 
   return <AuthContext value={authInfo}>{children}</AuthContext>;
 };

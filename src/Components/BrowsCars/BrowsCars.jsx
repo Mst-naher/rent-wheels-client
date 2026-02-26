@@ -1,60 +1,74 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React, { useState } from "react";
+import { Link, useLoaderData } from "react-router-dom";
+import MyContainer from "../MyContainer/MyContainer";
+import { FaSearch } from "react-icons/fa";
+import CarCard from "../CarCard/CarCard";
+import Banner from "../Banner/Banner";
 
-const BrowsCars = ({product }) => {
-  console.log(product)
-  // const { imageUrl, carName } = product || {};
+const BrowsCars = () => {
+  
+   const products = useLoaderData();
+   console.log(products);
+   const [search, setSearch] = useState("");
+    
+  
 
- if(!product)
-   return <p>Loading...</p>
+   const term = search.trim().toLocaleLowerCase();
+   const searchedProducts = term
+     ? products.filter((product) =>
+         product.carName.toLocaleLowerCase().includes(term),
+       )
+     : products;
+   console.log(searchedProducts);
+
+  if (!products) return <p>Loading...</p>;
   return (
-    <div>
-      <h1>this is BrowsCars </h1>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5   ">
-        <div
-          key={product._id}
-          className="card bg-base-200 p-4 rounded hover:shadow-xl"
-        >
-          <figure className="h-60 overflow-hidden">
-            <img
-              src={product?.imageUrl}
-              alt="car"
-              className="w-full h-full object-cover hover:scale-110 transition-transform"
-            />
-          </figure>
-          <div className="card-body">
-            <div className="flex ">
-              <h2 className="card-title flex-1">{product.carName}</h2>
-              <p className="badge badge-secondary hover:scale-110 transition-discrete flex-1">
-                {product.status}
-              </p>
-            </div>
-            <p>Rent per day : {product.rentPricePerDay} </p>
-            <p>Provider Name : {product.providerName} </p>
-            <div className="card-actions flex ">
-              {/* <div className="badge badge-outline">Car Model : {carType}</div> */}
+    <MyContainer>
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 relative m-10">
+        {/* Found count */}
+        <h1 className="text-lg font-semibold">
+          Found Car : {searchedProducts.length}
+        </h1>
 
-              <div className="tooltip flex-1">
-                <div className="tooltip-content">
-                  <div className="animate-bounce text-orange-400 -rotate-70 text-3xl font-black">
-                    Wow!
-                  </div>
-                </div>
-                <button className="btn btn-primary btn-sm hover:scale-110 transition-discrete rounded-full">
-                  Car Model : {product.carType}
-                </button>
-              </div>
-              <Link
-                to={`/viewDetails/${product._id}`}
-                className="btn btn-primary btn-sm hover:scale-110 transition-discrete flex-1"
-              >
-                View Details
-              </Link>
-            </div>
-          </div>
+        {/* Search box */}
+        <div className="relative  w-full md:w-80">
+          <input
+            type="text"
+            placeholder="Search car by name..."
+            className="input input-bordered w-full pr-10"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <FaSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500" />
         </div>
       </div>
-    </div>
+
+      {searchedProducts.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5">
+          {searchedProducts.map((product) => (
+            <CarCard key={product.id} product={product} />
+            // <Banner key={product.id} product={product}/>
+          ))}
+        </div>
+      ) : (
+        <div className="max-w-11/12 mx-auto w-full py-4 md:py-8 lg:py-12  ">
+          <div className="flex flex-col justify-center items-center p-15">
+            <img src="../assets/App-Error.png" alt="" />
+            <h1 className="lg:text-3xl font-bold mt-10">
+              Oops!! Car not found!
+            </h1>
+            <p className="text-[30px] text-pink-600 mt-2 font-semibold">
+              The Car you are requesting is not found on our system. please try
+              another car
+            </p>
+
+            <button className=" bg-gradient-to-r from-[#632EE3] to-[#9F62F2] text-white px-4 py-2 w-[200px] rounded-sm text-lg font-bold m-4 hover:scale-105 transition-transform duration-200">
+              Go Back!
+            </button>
+          </div>
+        </div>
+      )}
+    </MyContainer>
   );
 };
 
