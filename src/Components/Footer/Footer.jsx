@@ -33,22 +33,24 @@ const Footer = () => {
             <p>We are number one ....</p>
           </div>
           <div>
-            <h4>Address</h4>
+            <h4>Terms & Conditions:</h4>
             <p>33/A</p>
-            <p>33/A</p>
-            <p>33/A</p>
+            <p>34/b</p>
+            <p>35/d</p>
           </div>
           <div>
-            <h4 className="mb-5">Contact Us:</h4>
+            <h4 className="mb-5">Contact Info:</h4>
+
             <p className="mb-2">
               <FaPhoneAlt />
             </p>
             <p>
               <MdOutlineMail />
             </p>
+            <p>Address</p>
           </div>
           <div>
-            <h4 className="mb-5">Our Social Media:</h4>
+            <h4 className="mb-5">Social Media Links:</h4>
 
             <div>
               <p className="mb-2">

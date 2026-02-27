@@ -36,22 +36,18 @@ const Banner = () => {
 
         {/* Overlay */}
         <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4">
-          <h1 className="bg-gradient-to-r from-indigo-500 via-purple-400 to-pink-500 text-xl text-white shadow-2xl rounded-xl p-1 md:text-4xl lg:text-5xl font-semibold whitespace-nowrap">
-            Start your straightforward journey here
-          </h1>
-
-          <p className="text-pink-700 font-bold mt-4 max-w-xl shadow-2xl">
+          <p className="text-yellow-400 md:text-3xl font-bold mt-4 max-w-xl md:shadow-2xl">
             “Travel safe, return stronger, and let every mile bring you closer
             to your dreams.”
           </p>
 
-          <button className="mt-6 btn btn-border text-gray-700 rounded-full">
-            Book your car
+          <button className="m-3 md:m-30 btn btn-border text-black rounded-full">
+            Choose your car
           </button>
 
           {/* Search box */}
           <form onSubmit={handleSubmit}>
-            <div className="relative  w-full md:w-80">
+            <div className="flex relative  w-full md:w-80 mt-">
               <input
                 type="text"
                 placeholder="Search car by name..."
@@ -59,24 +55,14 @@ const Banner = () => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-outline btn-accent">
                 Search
               </button>
             </div>
           </form>
-          {/*Search Bar */}
-          {/* <div className="mt-6 w-full max-w-md">
-            <div className="flex bg-transparent border border-white rounded-full overflow-hidden">
-              <input
-                type="text"
-                placeholder="Search your destination..."
-                className="w-full px-4 py-2 md:py-3 bg-transparent text-white placeholder-white outline-none"
-              />
-              <button className="px-6 text-white">
-                <FaSearch />
-              </button>
-            </div>
-          </div> */}
+          <h1 className="bg-gradient-to-r from-indigo-500 via-purple-400 to-pink-500 text-xl text-white shadow-2xl rounded-xl p-1 text-md md:text-3xl lg:text-4xl font-semibold whitespace-nowrap mt-10">
+            Start your straightforward journey here
+          </h1>
         </div>
       </div>
       {/* <div className="relative">
