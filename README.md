@@ -3,7 +3,7 @@
  - Live
  - https://teal-kleicha-551ddc.netlify.app/
  - https://rent-wheels-server-two.vercel.app/ 
- 
+
   - GitHub
   - https://github.com/Mst-naher/rent-wheels-server
   - https://github.com/Mst-naher/rent-wheels-client
@@ -32,6 +32,6 @@
 
 
 
-## Expanding the ESLint configuration
+
 
 
